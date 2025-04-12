@@ -52,7 +52,7 @@ const TextInputForm: React.FC<TextInputFormProps> = ({
           <button
             type="button"
             onClick={() => setCurrentInputLanguage(sourceLanguage)}
-            className={`w-full py-1.5 px-2 rounded-lg cursor-pointer text-xs ${currentInputLanguage === sourceLanguage
+            className={`w-full py-2 px-2 rounded-lg cursor-pointer text-xs ${currentInputLanguage === sourceLanguage
               ? 'bg-[#ff4599]/90 text-white'
               : 'bg-[#4b4363]/70 text-gray-300'
               } transition-colors`}
@@ -64,7 +64,7 @@ const TextInputForm: React.FC<TextInputFormProps> = ({
           <button
             type="button"
             onClick={() => setCurrentInputLanguage(targetLanguage)}
-            className={`w-full py-1.5 px-2 rounded-lg cursor-pointer text-xs ${currentInputLanguage === targetLanguage
+            className={`w-full py-2 px-2 rounded-lg cursor-pointer text-xs ${currentInputLanguage === targetLanguage
               ? 'bg-[#7afff2]/90 text-gray-800'
               : 'bg-[#4b4363]/70 text-gray-300'
               } transition-colors`}
@@ -79,7 +79,7 @@ const TextInputForm: React.FC<TextInputFormProps> = ({
           value={currentMessage}
           onChange={(e) => setCurrentMessage(e.target.value)}
           placeholder={`Write in ${languages.find(lang => lang.code === currentInputLanguage)?.name || ''}...`}
-          className={`flex-1 p-2 bg-[#32294a]/50 border border-[#615472]/50 rounded-lg mr-2 text-white text-xs placeholder-gray-400 focus:outline-none focus:ring-1 ${currentInputLanguage === sourceLanguage
+          className={`flex-1 p-2 bg-[#32294a]/50 border border-[#615472]/50 rounded-lg mr-2 text-white text-base placeholder-gray-400 focus:outline-none focus:ring-1 ${currentInputLanguage === sourceLanguage
             ? 'focus:ring-[#ff4599]/50'
             : 'focus:ring-[#7afff2]/50'
             } transition-all`}
