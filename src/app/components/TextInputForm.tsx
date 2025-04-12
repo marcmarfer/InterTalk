@@ -52,7 +52,7 @@ const TextInputForm: React.FC<TextInputFormProps> = ({
           <button
             type="button"
             onClick={() => setCurrentInputLanguage(sourceLanguage)}
-            className={`w-full py-2 px-2 rounded-lg cursor-pointer text-xs ${currentInputLanguage === sourceLanguage
+            className={`w-full py-2 px-2 rounded-lg cursor-pointer text-sm ${currentInputLanguage === sourceLanguage
               ? 'bg-[#ff4599]/90 text-white'
               : 'bg-[#4b4363]/70 text-gray-300'
               } transition-colors`}
@@ -64,7 +64,7 @@ const TextInputForm: React.FC<TextInputFormProps> = ({
           <button
             type="button"
             onClick={() => setCurrentInputLanguage(targetLanguage)}
-            className={`w-full py-2 px-2 rounded-lg cursor-pointer text-xs ${currentInputLanguage === targetLanguage
+            className={`w-full py-2 px-2 rounded-lg cursor-pointer text-sm ${currentInputLanguage === targetLanguage
               ? 'bg-[#7afff2]/90 text-gray-800'
               : 'bg-[#4b4363]/70 text-gray-300'
               } transition-colors`}
