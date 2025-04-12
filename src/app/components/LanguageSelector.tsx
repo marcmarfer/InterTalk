@@ -38,14 +38,14 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
       <div className="flex-shrink-0 flex items-center justify-center">
         <button
           onClick={onSwapLanguages}
-          className="p-3 cursor-pointer"
+          className="p-2 cursor-pointer"
           aria-label="Swap languages"
         >
           <Image
             src="/icons/swap-arrows.svg"
             alt="Swap Languages Icon"
-            width={24}
-            height={24}
+            width={20}
+            height={20}
             className="text-white"
           />
         </button>

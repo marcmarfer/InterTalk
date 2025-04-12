@@ -40,7 +40,7 @@ const ConversationHistory: React.FC<ConversationHistoryProps> = ({
 
   return (
     <div className="flex-1 min-h-[150px] overflow-hidden mb-4 flex flex-col">
-      <h2 className="text-gray-400 text-xl font-medium mb-4">Conversation History</h2>
+      <h2 className="text-gray-400 text-lg font-medium mb-3">Conversation History</h2>
       <div className="flex-1 overflow-y-auto pr-2">
         {messages.length > 0 ? (
           <div className="space-y-6">
@@ -58,7 +58,7 @@ const ConversationHistory: React.FC<ConversationHistoryProps> = ({
           </div>
         ) : (
           <div className="h-full flex items-center justify-center">
-            <p className="text-center text-gray-400">No messages yet</p>
+            <p className="text-center text-gray-400 text-sm">No messages yet</p>
           </div>
         )}
       </div>

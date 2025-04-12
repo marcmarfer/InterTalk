@@ -44,11 +44,11 @@ const SelectLanguageInput: React.FC<SelectLanguageInputProps> = ({
   return (
     <div ref={dropdownRef} className="relative">
       <div
-        className="bg-[#393251]/50 backdrop-blur-sm p-4 rounded-2xl border border-[#615472]/50 text-white relative cursor-pointer"
+        className="bg-[#393251]/50 backdrop-blur-sm p-3 rounded-xl border border-[#615472]/50 text-white relative cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="flex items-center">
-          <div className="w-8 h-6 relative mr-3 overflow-hidden rounded-sm">
+          <div className="w-6 h-4 relative mr-2 overflow-hidden rounded-sm">
             <Image
               src={selectedLanguage?.flag || ''}
               alt={selectedLanguage?.name || ''}
@@ -56,32 +56,32 @@ const SelectLanguageInput: React.FC<SelectLanguageInputProps> = ({
               className="object-cover"
             />
           </div>
-          <div className="text-left text-2xl font-medium">
+          <div className="text-left text-lg font-medium">
             {selectedLanguage?.name || value}
           </div>
         </div>
 
-        <div className="absolute right-6 top-1/2 transform -translate-y-1/2">
+        <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
           <Image
             src="/icons/chevron-down.svg"
             alt="Chevron Down Icon"
-            width={20}
-            height={20}
+            width={16}
+            height={16}
             className={`text-white transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
           />
         </div>
       </div>
 
       {isOpen && (
-        <div className="absolute left-0 right-0 mt-2 bg-[#393251]/90 backdrop-blur-sm rounded-2xl border border-[#615472]/50 text-white overflow-hidden z-10 max-h-60 overflow-y-auto">
+        <div className="absolute left-0 right-0 mt-1 bg-[#393251]/90 backdrop-blur-sm rounded-xl border border-[#615472]/50 text-white overflow-hidden z-10 max-h-60 overflow-y-auto">
           {languages.map((lang) => (
             <div
               key={lang.code}
-              className={`p-4 cursor-pointer hover:bg-[#4b4363] ${lang.code === value ? 'bg-[#4b4363]' : ''}`}
+              className={`p-3 cursor-pointer hover:bg-[#4b4363] ${lang.code === value ? 'bg-[#4b4363]' : ''}`}
               onClick={() => handleLanguageSelect(lang.code)}
             >
               <div className="flex items-center">
-                <div className="w-8 h-6 relative mr-3 overflow-hidden rounded-sm">
+                <div className="w-6 h-4 relative mr-2 overflow-hidden rounded-sm">
                   <Image
                     src={lang.flag}
                     alt={lang.name}
@@ -89,7 +89,7 @@ const SelectLanguageInput: React.FC<SelectLanguageInputProps> = ({
                     className="object-cover"
                   />
                 </div>
-                <div className="text-xl font-medium">
+                <div className="text-base font-medium">
                   {lang.name}
                 </div>
               </div>
