@@ -18,21 +18,40 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Create .env.local from secrets
+        run: |
+          echo "NEXT_PUBLIC_GEMINI_API_KEY=${{ secrets.NEXT_PUBLIC_GEMINI_API_KEY }}" >> .env.local
+
       - name: Install dependencies
         run: npm install
 
       - name: Build Next.js
         run: npm run build
 
-      - name: Deploy to VPS
+      - name: Clean up node_modules
+        run: rm -rf node_modules
+
+      - name: Archive app
+        run: tar -czf app.tgz ./*
+
+      - name: Upload app to VPS
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          source: "app.tgz"
+          target: "/var/www/intertalk"
+
+      - name: Deploy on VPS
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_KEY }}
+          password: ${{ secrets.VPS_PASSWORD }}
           script: |
             cd /var/www/intertalk
-            git pull origin develop
+            tar -xzf app.tgz
             npm install
             npm run build
             pm2 restart intertalk
