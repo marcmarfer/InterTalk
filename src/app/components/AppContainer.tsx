@@ -61,7 +61,7 @@ export default function AppContainer() {
 
   return (
 <div className="flex flex-col items-center justify-start h-[100svh] w-full bg-[#262240] relative overflow-hidden">
-      <div className="fixed top-0 left-0 w-[90%] h-[700px] bg-[#ff4599]/30 rounded-full blur-[150px] -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+      <div className="absolute z-50 top-0 left-0 w-[90%] h-[500px] bg-[#ff4599]/20 rounded-full blur-[150px] -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
 
         <Header />
 
