@@ -109,7 +109,8 @@ function getLanguageName(languageCode: string): string {
     'ru': 'ruso',
     'zh': 'chino',
     'ja': 'japonés',
-    'ko': 'coreano'
+    'ko': 'coreano',
+    'tr': 'turco'
   };
 
   return languageNames[languageCode] || languageCode;
@@ -132,10 +133,24 @@ function fallbackTranslation(
       ru: 'Текст переведен на русский',
       zh: '翻译成中文的文本',
       ja: '日本語に翻訳されたテキスト',
-      ko: '한국어로 번역된 텍스트'
+      ko: '한국어로 번역된 텍스트',
+      tr: 'Türkçe\'ye çevrilmiş metin'
     },
     es: {
       en: 'Text translated to English',
+      fr: 'Texte traduit en français',
+      de: 'Text ins Deutsche übersetzt',
+      it: 'Testo tradotto in italiano',
+      pt: 'Texto traduzido para português',
+      ru: 'Текст переведен на русский',
+      zh: '翻译成中文的文本',
+      ja: '日本語に翻訳されたテキスト',
+      ko: '한국어로 번역된 텍스트',
+      tr: 'Türkçe\'ye çevrilmiş metin'
+    },
+    tr: {
+      en: 'Text translated to English',
+      es: 'Texto traducido al español',
       fr: 'Texte traduit en français',
       de: 'Text ins Deutsche übersetzt',
       it: 'Testo tradotto in italiano',
@@ -175,7 +190,8 @@ export function getSpeechRecognitionLanguageCode(languageCode: string): string {
     'ru': 'ru-RU',
     'zh': 'zh-CN',
     'ja': 'ja-JP',
-    'ko': 'ko-KR'
+    'ko': 'ko-KR',
+    'tr': 'tr-TR'
   };
 
   return languageMappings[languageCode] || languageCode;

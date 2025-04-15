@@ -8,14 +8,15 @@ export const DEFAULT_TEMPERATURE = 0.2;
 export const MAX_OUTPUT_TOKENS = 1024;
 
 export const SUPPORTED_LANGUAGES = [
-  { code: 'es', name: 'Spanish' },
+  { code: 'zh', name: 'Chinese' },
   { code: 'en', name: 'English' },
   { code: 'fr', name: 'French' },
   { code: 'de', name: 'German' },
   { code: 'it', name: 'Italian' },
-  { code: 'pt', name: 'Portuguese' },
-  { code: 'ru', name: 'Russian' },
-  { code: 'zh', name: 'Chinese' },
   { code: 'ja', name: 'Japanese' },
   { code: 'ko', name: 'Korean' },
+  { code: 'pt', name: 'Portuguese' },
+  { code: 'ru', name: 'Russian' },
+  { code: 'es', name: 'Spanish' },
+  { code: 'tr', name: 'Turkish' },
 ]; 

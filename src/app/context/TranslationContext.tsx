@@ -55,7 +55,8 @@ export const TranslationProvider = ({ children }: { children: ReactNode }) => {
         'ja': '/flags/japan-flag.svg',
         'zh': '/flags/china-flag.svg',
         'ru': '/flags/russia-flag.svg',
-        'ko': '/flags/korea-flag.svg'
+        'ko': '/flags/korea-flag.svg',
+        'tr': '/flags/turkey-flag-icon.svg'
       };
       return flagMap[code] || `/unknown-flag.svg`;
     };
