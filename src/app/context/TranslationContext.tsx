@@ -6,7 +6,7 @@ import {
   isSpeechSynthesisSupported
 } from '../services/translationService';
 import { SUPPORTED_LANGUAGES } from '../config/api-config';
-import { Language, Message, TranslationResult, SpeechInputType } from '../types';
+import { Language, Message, TranslationResult } from '../types';
 
 interface TranslationContextType {
   sourceLanguage: string;
@@ -98,7 +98,8 @@ export const TranslationProvider = ({ children }: { children: ReactNode }) => {
       setCurrentMessage(result.originalText);
       setTranslatedMessage(result.translatedText);
       setCurrentSpeechLanguage(toLanguage);
-      setSpeakTranslation(isVoiceMode);
+      
+      setSpeakTranslation(false);
 
       addMessageToConversation(result);
     } catch (error) {

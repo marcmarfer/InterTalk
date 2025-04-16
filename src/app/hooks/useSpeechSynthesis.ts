@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useSpeech } from '../context/SpeechContext';
 
 interface UseSpeechSynthesisProps {
   text: string;
@@ -17,6 +18,7 @@ export const useSpeechSynthesis = ({
 }: UseSpeechSynthesisProps) => {
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [isSupported, setIsSupported] = useState(false);
+  const { isMuted } = useSpeech();
 
   useEffect(() => {
     if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
@@ -39,7 +41,7 @@ export const useSpeechSynthesis = ({
   }, []);
 
   useEffect(() => {
-    if (!isSupported || !speak || !text) return;
+    if (!isSupported || !speak || !text || isMuted) return;
 
     const utterance = new SpeechSynthesisUtterance(text);
     
@@ -66,13 +68,12 @@ export const useSpeechSynthesis = ({
 
     // Cancel any ongoing speech synthesis
     window.speechSynthesis.cancel();
-    
     window.speechSynthesis.speak(utterance);
     
     return () => {
       window.speechSynthesis.cancel();
     };
-  }, [text, language, speak, voices, onEnd, isSupported]);
+  }, [text, language, speak, voices, onEnd, isSupported, isMuted]);
 
   return { isSupported };
 }; 

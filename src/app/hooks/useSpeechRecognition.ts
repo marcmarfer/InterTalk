@@ -22,12 +22,29 @@ export const useSpeechRecognition = ({
 }: UseSpeechRecognitionProps): UseSpeechRecognitionReturn => {
   const [recognition, setRecognition] = useState<any>(null);
   const [transcript, setTranscript] = useState<string>('');
+  const [permissionGranted, setPermissionGranted] = useState<boolean>(false);
+
+  const requestMicrophonePermission = useCallback(async () => {
+    try {
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        await navigator.mediaDevices.getUserMedia({ audio: true });
+        setPermissionGranted(true);
+        return true;
+      }
+    } catch (error) {
+      console.error('Error requesting microphone permissions:', error);
+      return false;
+    }
+    return false;
+  }, []);
 
   useEffect(() => {
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
       alert('Your browser does not support speech recognition. Please use a compatible browser.');
       return;
     }
+
+    requestMicrophonePermission();
 
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognitionInstance = new SpeechRecognition();
@@ -49,7 +66,9 @@ export const useSpeechRecognition = ({
     };
 
     recognitionInstance.onerror = (event: any) => {
-      console.error('Error en el reconocimiento de voz:', event.error);
+      if (event.error !== 'aborted') {
+        console.error('Speech recognition error:', event.error);
+      }
       onEnd();
     };
 
@@ -74,15 +93,38 @@ export const useSpeechRecognition = ({
     if (isListening) {
       try {
         setTranscript('');
-        recognition.start();
+        
+        if (!permissionGranted) {
+          requestMicrophonePermission().then(granted => {
+            if (granted) {
+              try {
+                recognition.start();
+              } catch (error) {
+                console.error('Error starting recognition:', error);
+              }
+            } else {
+              onEnd();
+            }
+          });
+        } else {
+          setTimeout(() => {
+            try {
+              recognition.start();
+            } catch (error) {
+              console.error('Error starting recognition (with delay):', error);
+            }
+          }, 100);
+        }
       } catch (error) {
-        console.error('Error al iniciar el reconocimiento:', error);
+        console.error('Error starting recognition:', error);
       }
     } else {
       try {
         recognition.stop();
       } catch (error) {
-        console.error('Error al detener el reconocimiento:', error);
+        if (error instanceof Error && !error.message.includes('not started')) {
+          console.error('Error stopping recognition:', error);
+        }
       }
     }
   }, [isListening, recognition]);

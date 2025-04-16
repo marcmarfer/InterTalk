@@ -31,7 +31,8 @@ export default function AppContainer() {
     languages,
     synthSupported,
     setSourceLanguage,
-    setTargetLanguage
+    setTargetLanguage,
+    setSpeakTranslation
   } = useTranslation();
 
   const {
@@ -42,7 +43,8 @@ export default function AppContainer() {
     startTargetListening,
     stopTargetListening,
     handleSourceSpeechResult,
-    handleTargetSpeechResult
+    handleTargetSpeechResult,
+    isMuted
   } = useSpeech();
 
   const handleSourceLanguageChange = (e: React.ChangeEvent<HTMLSelectElement> | { target: { value: string } }) => {
@@ -56,6 +58,9 @@ export default function AppContainer() {
   const handleTextSubmit = async (message: string, fromLanguage: string, toLanguage: string) => {
     if (message.trim()) {
       await processTranslation(message, fromLanguage, toLanguage);
+      if (!isMuted) {
+        setSpeakTranslation(true);
+      }
     }
   };
 
@@ -140,7 +145,7 @@ export default function AppContainer() {
           text={translatedMessage}
           language={getSpeechSynthesisLanguageCode(currentSpeechLanguage)}
           onEnd={handleSpeechEnd}
-          speak={speakTranslation}
+          speak={speakTranslation && !isMuted}
         />
       )}
     </div>

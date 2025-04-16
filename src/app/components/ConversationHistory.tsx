@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
+import Image from 'next/image';
 import Message from './Message';
+import { useSpeech } from '../context/SpeechContext';
 
 interface Language {
   code: string;
@@ -29,6 +31,7 @@ const ConversationHistory: React.FC<ConversationHistoryProps> = ({
   languages
 }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { isMuted, toggleMute } = useSpeech();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -40,7 +43,23 @@ const ConversationHistory: React.FC<ConversationHistoryProps> = ({
 
   return (
     <div className="flex-1 min-h-[150px] overflow-hidden mb-4 flex flex-col">
-      <h2 className="text-gray-400 text-lg font-medium mb-3">Conversation History</h2>
+      <div className="flex justify-between items-center mb-3">
+        <h2 className="text-gray-400 text-lg font-medium">Conversation History</h2>
+        <button
+          onClick={toggleMute}
+          className="hover:opacity-80 transition-opacity"
+          aria-label={isMuted ? "Activar audio" : "Silenciar audio"}
+          title={isMuted ? "Enable audio" : "Silence audio"}
+        >
+          <Image
+            src={isMuted ? '/icons/sound-off.svg' : '/icons/sound-on.svg'}
+            alt={isMuted ? "Audio disabled" : "Audio enabled"}
+            width={20}
+            height={20}
+          />
+        </button>
+      </div>
+      
       <div className="flex-1 overflow-y-auto pr-2">
         {messages.length > 0 ? (
           <div className="space-y-6">
