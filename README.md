@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# InterTalk - Real-Time Translation App
+
+InterTalk is a web application built with Next.js that provides real-time voice and text translation between multiple languages. It allows users to communicate using either voice input (speech-to-text) or text input, receiving translations instantly.
+
+## Features
+
+*   **AI-Powered Translation:** Real-time translations powered by Google's Gemini 2.0 Flash model.
+*   **Voice Input:** Speak naturally and have your words transcribed and translated.
+*   **Text Input:** Type messages for translation when voice input is not preferred.
+*   **Voice Output (Text-to-Speech):** Hear the translations spoken aloud (using browser/OS voices, see notes below).
+*   **Multiple Languages:** Supports translation between various languages (e.g., English, Spanish, French, Turkish, etc.).
+*   **Language Swapping:** Easily swap source and target languages.
+*   **Conversation History:** View the history of your conversation and translations.
+*   **Mode Toggle:** Switch between Voice Mode and Text Mode interfaces.
 
 ## Getting Started
 
-First, run the development server:
+Follow these instructions to set up and run the project locally.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Prerequisites
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+*   [Node.js](https://nodejs.org/) (Latest LTS version recommended)
+*   [npm](https://www.npmjs.com/), [yarn](https://yarnpkg.com/), [pnpm](https://pnpm.io/), or [bun](https://bun.sh/) package manager
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Installation
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/marcmarfer/intertalk.git
+    cd intertalk
+    ```
 
-## Learn More
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    # or
+    yarn install
+    # or
+    pnpm install
+    # or
+    bun install
+    ```
 
-To learn more about Next.js, take a look at the following resources:
+3.  **Configuration (Required for Translation):**
+    *   This project uses the Gemini API for translations. You need an API key from Google Cloud / Google AI Studio for this feature to work.
+    *   Create a `.env.local` file in the root of the project.
+    *   Add your Gemini API key to the `.env.local` file. **Make sure the variable name starts with `NEXT_PUBLIC_`** so it's available to the browser:
+        ```
+        NEXT_PUBLIC_GEMINI_API_KEY=YOUR_GEMINI_API_KEY_HERE
+        ```
+    *   *(Optional: Refer to `.env.example` if it exists for the required variable format.)*
+    *   **Note:** Without the API key, the application will use a fallback mock translation service with limited, predefined translations.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4.  **Run the development server:**
+    ```bash
+    npm run dev
+    # or
+    yarn dev
+    # or
+    pnpm dev
+    # or
+    bun dev
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+5.  **Open the application:**
+    Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Deploy on Vercel
+## Voice Quality (Text-to-Speech Limitations)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The application uses your browser's built-in Text-to-Speech engine (`window.speechSynthesis`) to read translations aloud.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Important:** For now, because this application uses the browser's built-in `window.speechSynthesis` engine, the quality, accent, and availability of voices depend entirely on the specific voices installed on **your operating system** (iOS, Android, Windows, macOS, Linux) and browser. The application cannot provide voices that are not already present on your system. This means that sometimes, especially on certain devices or for specific languages, the voice may not have the correct native accent or may sound robotic.
+
+**Improving Voice Quality (Especially iOS/macOS):**
+
+You may be able to improve the quality by downloading enhanced voices provided by your OS vendor:
+
+*   **iOS:** Go to `Settings` > `Accessibility` > `Spoken Content` > `Voices`. Select your language and download the "Enhanced" or "Premium" option if available.
+*   **macOS:** Go to `System Settings` > `Accessibility` > `Spoken Content`. Use the `System Voice` dropdown, select `Manage Voices...`, and download higher-quality voices for your desired languages.
+*   **Windows/Android:** Check your system's accessibility or language settings for options to install additional TTS voices or engines.
+
+Using higher-quality system voices, where available, will significantly improve the speech output of this application. For guaranteed high-quality and consistent voices across all platforms, future development could involve integrating a cloud-based Text-to-Speech service.
+
+## License
+
+This project is licensed under the terms of the GNU General Public License v3.0 (GPLv3). 
+See the [LICENSE](LICENSE) file for the full license text.
