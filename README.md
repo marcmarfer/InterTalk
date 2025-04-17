@@ -71,15 +71,7 @@ The application uses your browser's built-in Text-to-Speech engine (`window.spee
 
 **Important:** For now, because this application uses the browser's built-in `window.speechSynthesis` engine, the quality, accent, and availability of voices depend entirely on the specific voices installed on **your operating system** (iOS, Android, Windows, macOS, Linux) and browser. The application cannot provide voices that are not already present on your system. This means that sometimes, especially on certain devices or for specific languages, the voice may not have the correct native accent or may sound robotic.
 
-**Improving Voice Quality (Especially iOS/macOS):**
-
-You may be able to improve the quality by downloading enhanced voices provided by your OS vendor:
-
-*   **iOS:** Go to `Settings` > `Accessibility` > `Spoken Content` > `Voices`. Select your language and download the "Enhanced" or "Premium" option if available.
-*   **macOS:** Go to `System Settings` > `Accessibility` > `Spoken Content`. Use the `System Voice` dropdown, select `Manage Voices...`, and download higher-quality voices for your desired languages.
-*   **Windows/Android:** Check your system's accessibility or language settings for options to install additional TTS voices or engines.
-
-Using higher-quality system voices, where available, will significantly improve the speech output of this application. For guaranteed high-quality and consistent voices across all platforms, future development could involve integrating a cloud-based Text-to-Speech service.
+For guaranteed high-quality and consistent voices across all platforms, future development could involve integrating a cloud-based Text-to-Speech service.
 
 ## License
 
