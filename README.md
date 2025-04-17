@@ -2,6 +2,8 @@
 
 InterTalk is a web application built with Next.js that provides real-time voice and text translation between multiple languages. It allows users to communicate using either voice input (speech-to-text) or text input, receiving translations instantly.
 
+![image](https://github.com/user-attachments/assets/c00da843-cc2b-4217-8002-8487819c5a37)
+
 ## Features
 
 *   **AI-Powered Translation:** Real-time translations powered by Google's Gemini 2.0 Flash model.
