@@ -91,32 +91,30 @@ export const useSpeechRecognition = ({
     if (!recognition) return;
 
     if (isListening) {
-      try {
-        setTranscript('');
-        
-        if (!permissionGranted) {
-          requestMicrophonePermission().then(granted => {
-            if (granted) {
-              try {
-                recognition.start();
-              } catch (error) {
-                console.error('Error starting recognition:', error);
-              }
-            } else {
-              onEnd();
-            }
-          });
-        } else {
-          setTimeout(() => {
+      setTranscript('');
+      
+      if (!permissionGranted) {
+        requestMicrophonePermission().then(granted => {
+          if (granted) {
             try {
               recognition.start();
             } catch (error) {
-              console.error('Error starting recognition (with delay):', error);
+              if (!(error instanceof DOMException && error.name === 'InvalidStateError')) {
+                 console.error('Error starting recognition after microphone permission grant:', error);
+              }
             }
-          }, 100);
+          } else {
+            onEnd();
+          }
+        });
+      } else {
+        try {
+          recognition.start();
+        } catch (error) {
+           if (!(error instanceof DOMException && error.name === 'InvalidStateError')) {
+              console.error('Error starting recognition (already permitted microphone):', error);
+           }
         }
-      } catch (error) {
-        console.error('Error starting recognition:', error);
       }
     } else {
       try {
@@ -127,7 +125,7 @@ export const useSpeechRecognition = ({
         }
       }
     }
-  }, [isListening, recognition]);
+  }, [isListening, recognition, permissionGranted, requestMicrophonePermission, onEnd]);
 
   const handleFinishSpeaking = useCallback(() => {
     if (recognition && isListening) {

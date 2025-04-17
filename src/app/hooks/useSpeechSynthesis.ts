@@ -62,8 +62,10 @@ export const useSpeechSynthesis = ({
     };
     
     utterance.onerror = (event) => {
-      console.error('Error de síntesis de voz:', event);
-      onEnd();
+      if (event.error !== 'interrupted') {
+        console.error('Speech synthesis error:', event);
+        onEnd();
+      }
     };
 
     // Cancel any ongoing speech synthesis

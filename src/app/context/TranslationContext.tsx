@@ -99,8 +99,6 @@ export const TranslationProvider = ({ children }: { children: ReactNode }) => {
       setTranslatedMessage(result.translatedText);
       setCurrentSpeechLanguage(toLanguage);
       
-      setSpeakTranslation(false);
-
       addMessageToConversation(result);
     } catch (error) {
       console.error('Error in the translation:', error);

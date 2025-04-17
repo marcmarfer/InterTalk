@@ -60,6 +60,9 @@ export const SpeechProvider = ({ children }: { children: ReactNode }) => {
   }, [isIOS]);
 
   const startSourceListening = useCallback(() => {
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
     setIsSourceListening(true);
     setIsTargetListening(false);
   }, []);
@@ -69,6 +72,9 @@ export const SpeechProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const startTargetListening = useCallback(() => {
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
     setIsTargetListening(true);
     setIsSourceListening(false);
   }, []);

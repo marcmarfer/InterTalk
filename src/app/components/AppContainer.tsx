@@ -64,6 +64,16 @@ export default function AppContainer() {
     }
   };
 
+  const handleStartSourceListening = () => {
+    setSpeakTranslation(false);
+    startSourceListening();
+  };
+
+  const handleStartTargetListening = () => {
+    setSpeakTranslation(false);
+    startTargetListening();
+  };
+
   return (
 <div className="flex flex-col items-center justify-start h-[100svh] w-full bg-[#262240] relative overflow-hidden">
       <div className="absolute z-50 top-0 left-0 w-[90%] h-[500px] bg-[#ff4599]/20 rounded-full blur-[150px] -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
@@ -101,9 +111,9 @@ export default function AppContainer() {
                   isSourceListening={isSourceListening}
                   isTargetListening={isTargetListening}
                   isTranslating={isTranslating}
-                  onStartSourceListening={startSourceListening}
+                  onStartSourceListening={handleStartSourceListening}
                   onStopSourceListening={stopSourceListening}
-                  onStartTargetListening={startTargetListening}
+                  onStartTargetListening={handleStartTargetListening}
                   onStopTargetListening={stopTargetListening}
                   languages={languages}
                 />
