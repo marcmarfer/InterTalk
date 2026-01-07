@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Deploy Intertalk
 
 on:
   push:
@@ -6,52 +6,52 @@ on:
       - develop
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Use Node.js
-        uses: actions/setup-node@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
 
       - name: Create .env.local from secrets
         run: |
-          echo "NEXT_PUBLIC_GEMINI_API_KEY=${{ secrets.NEXT_PUBLIC_GEMINI_API_KEY }}" >> .env.local
+          echo "NEXT_PUBLIC_GEMINI_API_KEY=${{ secrets.NEXT_PUBLIC_GEMINI_API_KEY }}" > .env.local
 
-      - name: Install dependencies
-        run: npm install
+      - name: Archive application
+        run: |
+          git archive --format=tar.gz -o app.tgz HEAD
 
-      - name: Build Next.js
-        run: npm run build
+      - name: Setup SSH agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Clean up node_modules
-        run: rm -rf node_modules
-
-      - name: Archive app
-        run: tar -czf app.tgz ./*
+      - name: Add VPS to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p 22 ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
 
       - name: Upload app to VPS
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          password: ${{ secrets.VPS_PASSWORD }}
-          source: "app.tgz"
-          target: "/var/www/intertalk"
+        run: |
+          scp app.tgz \
+            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/intertalk
 
       - name: Deploy on VPS
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          password: ${{ secrets.VPS_PASSWORD }}
-          script: |
+        run: |
+          ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
+            set -e
             cd /var/www/intertalk
+
             tar -xzf app.tgz
+            rm app.tgz
+
             npm install
             npm run build
-            pm2 restart intertalk
+
+            pm2 restart intertalk || pm2 start npm --name intertalk -- start
+            pm2 save
